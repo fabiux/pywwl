@@ -1,8 +1,9 @@
 '''
-Created on Aug 9, 2012
+Module: wwl
+Compute distance and azimuth between two Maidenhead squares.
 
 @license: BSD
-@author: fabiux
+@author: Fabio Pani (IZ2UQF)
 @version: 0.2_beta
 '''
 
@@ -51,11 +52,11 @@ def getLongitude(location):
         lon = 'W'
     else:
         lon = 'E'
-    return lon, round(degrees(location['longitude']), 2)
+    return lon + " " + str(round(degrees(location['longitude']), 2))
 
 def getLatitude(location):
     if location['latitude'] > 0.0:
         lat = 'N'
     else:
         lat = 'S'
-    return lat, round(degrees(location['latitude']), 2)
+    return lat + " " + str(round(degrees(location['latitude']), 2))
