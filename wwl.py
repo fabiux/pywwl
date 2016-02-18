@@ -1,12 +1,10 @@
-'''
+"""
 Module: wwl
 Compute distance and azimuth between two Maidenhead squares.
 
-@license: BSD
 @author: Fabio Pani (IZ2UQF)
 @version: 0.2_beta
-'''
-
+"""
 from math import radians, degrees, pi, sin, cos, atan2, sqrt, pow
 
 WWL_LEN = 6
@@ -15,20 +13,27 @@ EARTHRADIUS = 6371.33
 bearing = 0
 distance = 0
 
-def isValidLocator(wwl):
+
+def is_valid_locator(wwl):
     if len(wwl) != WWL_LEN:
         return False
-    return not(wwl[0] < 'A' or wwl[0] > 'R' or wwl[1] < 'A' or wwl[1] > 'R' or wwl[2] < '0' or wwl[2] > '9' or wwl[3] < '0' or wwl[3] > '9' or wwl[4] < 'A' or wwl[4] > 'X' or wwl[5] < 'A' or wwl[5] > 'X')
+    return not(wwl[0] < 'A' or wwl[0] > 'R' or wwl[1] < 'A' or wwl[1] > 'R' or wwl[2] < '0' or
+               wwl[2] > '9' or wwl[3] < '0' or wwl[3] > '9' or wwl[4] < 'A' or wwl[4] > 'X' or
+               wwl[5] < 'A' or wwl[5] > 'X')
 
-def convertLocator(wwl):
-    loc = {}
+
+def convert_locator(wwl):
+    loc = dict()
     charbase = ord('A')
     numbase = ord('0')
-    loc['latitude'] = radians((ord(wwl[1]) - charbase) * 10.0 - 90.0 +  (ord(wwl[3]) - numbase) + (ord(wwl[5]) - charbase) / 24.0 + (1.0 / 48.0))
-    loc['longitude'] = radians((ord(wwl[0]) - charbase) * 20.0 - 180.0 + (ord(wwl[2]) - numbase) * 2.0 + (ord(wwl[4]) - charbase) / 12.0 + (1.0 / 24.0))
-    return loc;
+    loc['latitude'] = radians((ord(wwl[1]) - charbase) * 10.0 - 90.0 + (ord(wwl[3]) - numbase) +
+                              (ord(wwl[5]) - charbase) / 24.0 + (1.0 / 48.0))
+    loc['longitude'] = radians((ord(wwl[0]) - charbase) * 20.0 - 180.0 + (ord(wwl[2]) - numbase) * 2.0 +
+                               (ord(wwl[4]) - charbase) / 12.0 + (1.0 / 24.0))
+    return loc
 
-def bearingDistance(my_location, dx_location):
+
+def bearing_distance(my_location, dx_location):
     global bearing
     global distance
 
@@ -47,14 +52,16 @@ def bearingDistance(my_location, dx_location):
     distance = EARTHRADIUS * ca
     return
 
-def getLongitude(location):
+
+def get_longitude(location):
     if location['longitude'] < 0.0:
         lon = 'W'
     else:
         lon = 'E'
     return lon + " " + str(round(degrees(location['longitude']), 2))
 
-def getLatitude(location):
+
+def get_latitude(location):
     if location['latitude'] > 0.0:
         lat = 'N'
     else:
